@@ -11,13 +11,16 @@ typedef struct NODE
 node getnode();
 node insert_rear(node head);
 node insert_front(node head);
+node insert_position(node head, int pos);
 node delete_front(node head);
 node delete_rear(node head);
+node delete_position(node head, int pos);
 void display_list(node head);
 
 void main()
 {
     node head = NULL;
+    int pos;
     int choice;
     for (;;)
     {
@@ -35,14 +38,33 @@ void main()
             break;
 
         case 3:
-            head = delete_front(head);
+            printf("Enter the position:\n");
+            scanf("%d", &pos);
+            head = insert_position(head);
             break;
 
         case 4:
-            head = delete_rear(head);
+            head = delete_front(head);
             break;
 
         case 5:
+            head = delete_rear(head);
+            break;
+
+        case 6:
+            printf("Enter the position:\n");
+            scanf("%d", &pos);
+            head = delete_position(head);
+            break;
+
+        case 7:search(head);
+               break;
+
+        case 8:c=count_node(head);
+            printf("No of Nodes=%d\n",c);
+            break;
+
+        case 9:
             display_list(head);
             break;
 
@@ -130,43 +152,146 @@ node insert_rear(node head)
 node delete_front(node head)
 {
     node cur;
-    if(head==NULL)
+    if (head == NULL)
     {
         printf("List Empty\n");
         return head;
     }
-    cur=head;
-    head=head->next;
-    printf("Deleted :%d\n",cur->data);
+    cur = head;
+    head = head->next;
+    printf("Deleted :%d\n", cur->data);
     free(cur);
     return head;
 }
 
 node delete_rear(node head)
 {
-    node prev,cur;
-    if(head ==NULL)
+    node prev, cur;
+    if (head == NULL)
     {
         printf("List Empty\n");
         return head;
     }
-    if(head->next==NULL)
+    if (head->next == NULL)
     {
-        printf("Deleted %d\n",head->data);
+        printf("Deleted %d\n", head->data);
         free(head);
         return NULL;
     }
-    prev=NULL;
-    cur=head;
-    while(cur->next!=NULL)
+    prev = NULL;
+    cur = head;
+    while (cur->next != NULL)
     {
-        prev=cur;
-        cur=cur->next;
+        prev = cur;
+        cur = cur->next;
     }
-    printf("Deleted:%d\n",cur->data);
+    printf("Deleted:%d\n", cur->data);
     free(cur);
-    prev->next=NULL;
+    prev->next = NULL;
     return head;
 }
 
+node insert_position(node head, int pos)
+{
+    node new_node, prev, cur;
+    int count;
+    new_node = getnode();
+    if (head == NULL && pos == 1)
+    {
+        return new_node;
+    }
+    if(head==NULL)
+    {
+        printf("Invalid Position\n");
+        return head;
+    }
+    if(pos==1)
+    {
+        new_node->next=head;
+        return new_node;
+    }
+    count=1;
+    prev=NULL;
+    cur=head;
+    while(cur!=NULL&&count!=pos)
+    {
+        prev=cur;
+        cur=cur->next;
+        count++;
+    }
+    if(count==pos)
+    {
+        prev->next=new_node;
+        new_node->next=cur;
+        return head;
+    }
+    else
+    {
+        printf("Invalid Position\n");
+        return head;
+
+    }
+}
+
+node delete_position(node head, int pos)
+{
+    node cur,prev;
+    int count;
+    if(head==NULL)
+    {
+        printf("List Empty\n");
+        return NULL;
+    }
+    if(pos==1)
+    {
+        cur=head;
+        head=head->next;
+        free (cur);
+        return head;
+    }
+    prev=NULL;
+    cur=head;
+    count=1;
+    while(cur!=NULL&&count!=pos)
+    {
+        prev=cur;
+        cur=cur->next;
+        count++;
+    }
+    if(cur==NULL)
+    {
+        printf("Invalid Position\n");
+        return head;
+    }
+    prev->next=cur->next;
+    printf("%d Element is deleted\n",cur->data);
+    free(cur);
+    return head;
+}
+
+void search (node head)
+{
+    int key,flag=0;
+    node cur;
+    printf("Enter the element to be searched\n");
+    scanf("%d",&key);
+    cur=head;
+    while (cur!=NULL)
+    {
+        if(cur->data==key)
+        {
+            flag=1;
+            break;
+        }
+        cur=cur->next;
+    }
+    if(flag==0)
+    {
+        printf("\n Element not found\n")
+    }
+    else
+    {
+        printf("\n%d is found \n",key);
+    }
+}
 
