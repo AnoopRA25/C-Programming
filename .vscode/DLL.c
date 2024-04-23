@@ -17,7 +17,7 @@ int count_nodes(node head);
 void search(node head);
 node insert_position(node head);
 node delete_position(node head);
-main()
+int main()
 {
     node head = NULL;
     int choice, pos, c;

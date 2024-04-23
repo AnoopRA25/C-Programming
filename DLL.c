@@ -1,11 +1,11 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 typedef struct NODE
 {
     int data;
     struct NODE *next;
     struct NODE *prev;
-}*node;
+} *node;
 node getnode();
 node insert_front(node head);
 node insert_rear(node head);
@@ -13,21 +13,25 @@ void display_forward(node head);
 void display_backward(node head);
 node delete_front(node head);
 node delete_rear(node head);
+int count_nodes(node head);
+void search(node head);
+node insert_position(node head);
+node delete_position(node head);
 main()
 {
     node head = NULL;
-    int choice,pos,c;
-    for(;;)
+    int choice, pos, c;
+    for (;;)
     {
-        printf("1-Insert Front\n2-Insert Rear\n3-Display_Forward\n4-Display_Backward\n5-Delete_front\n6-Delete_rear\n7-Exit\n");
-        scanf("%d",&choice);
-        switch(choice)
+        printf("1-Insert Front\n2-Insert Rear\n3-Display_Foward\n4-Display_Backward\n5-Delete_front\n6-Delete_rear\n7-Count_Nodes\n8-Search\n9-Insert_Position\n10-Delete_Position\n11-Exit\n");
+        scanf("%d", &choice);
+        switch (choice)
         {
         case 1:
-            head=insert_front(head);
+            head = insert_front(head);
             break;
         case 2:
-            head=insert_rear(head);
+            head = insert_rear(head);
             break;
         case 3:
             display_forward(head);
@@ -36,10 +40,23 @@ main()
             display_backward(head);
             break;
         case 5:
-            head=delete_front(head);
+            head = delete_front(head);
             break;
         case 6:
-            head=delete_rear(head);
+            head = delete_rear(head);
+            break;
+        case 7:
+            c = count_nodes(head);
+            printf("count=%d\n", c);
+            break;
+        case 8:
+            search(head);
+            break;
+        case 9:
+            head = insert_position(head);
+            break;
+        case 10:
+            head = delete_position(head);
             break;
         default:
             exit(0);
@@ -188,7 +205,7 @@ node delete_rear(node head)
         {
             cur=cur->next;
         }
-        printf("Data Deletetd is\n");
+        printf("Data Deleted is\n");
         printf("%d\n",cur->data);
         cur1=cur->prev;
         free(cur);
