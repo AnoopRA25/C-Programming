@@ -1,26 +1,26 @@
 #include <stdio.h>
-#define max 5;
+#define max 5
 
 typedef struct Stack
 {
-    int A[max];
+    char A[max];
     int top;
 } st;
 
 int isfull(st *s)
 {
-    if (s->top == max - 1)
+    if (s->top == max-1)
         return 1;
     else
         return 0;
 }
 
-intempty(st *s)
+isempty(st *s)
 {
     if(s->top==-1)
-     return 1;
-    else 
-     return 0;
+        return 1;
+    else
+        return 0;
 }
 void push(st *s,int data)
 {
@@ -41,7 +41,7 @@ void pop(st *s)
         printf("Stack underflow\n");
     }
     else
-    s->top--;
+        s->top--;
 }
 
 void display(st *s)
@@ -51,26 +51,33 @@ void display(st *s)
     {
         printf("Stack is empty\n");
     }
-    else 
-           for(i=s->top;i>=0;i--) 
-           {
+    else
+        for(i=s->top; i>=0; i--)
+        {
             printf("%d\n",s->A[i]);
-           }
+        }
 }
 
 int main()
 {
     st s;
     s.top=-1;
-    push(&s,100);
+    int num;
+    for(int i=0; i<max; i++)
+    {
+        printf("Enter the element to be pushed\n");
+        scanf("%d",&num);
+        push(&s,num);
+    }
+    printf("\n");
     display(&s);
     printf("\n");
-    push(&s,200);
-    display(&s);
-    printf("\n");
-    push(&s,300);
-    display(&s);
-    pop(&s);
+    for(int i=0; i<max; i++)
+    {
+        pop(&s);
+        display(&s);
+        printf("\n");
+    }
     printf("\n");
     display(&s);
     return 0;
