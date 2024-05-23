@@ -34,52 +34,51 @@ void push(st *s,int data)
         s->A[s->top] = data;
     }
 }
-void pop(st *s)
+
+int pop(st *s)
 {
     if(isempty(s))
     {
         printf("Stack underflow\n");
     }
     else
-        s->top--;
-}
-
-void display(st *s)
-{
-    int i;
-    if(isempty(s))
     {
-        printf("Stack is empty\n");
+        int data = s->A[s->top];
+        s->top--;
+        return data;
     }
-    else
-        for(i=s->top; i>=0; i--)
-        {
-            printf("%d\n",s->A[i]);
-        }
+
 }
 
 int main()
 {
     st s;
     s.top=-1;
-    int num;
-    for(int i=0; i<max; i++)
+    int n,m,rem=0,rev=0,fact=1;
+    printf("Enter the number\n");
+    scanf("%d",&n);
+    if(n<=0)
     {
-        printf("Enter the element to be pushed\n");
-        scanf("%d",&num);
-        push(&s,num);
+        printf("Invalid input\n");
     }
-    printf("\n");
-    display(&s);
-    printf("\n");
-    for(int i=0; i<max; i++)
+    m=n;
+    while(n!=0)
     {
-        pop(&s);
-        display(&s);
-        printf("\n");
+        rem=n%10;
+        push(&s,rem);
+        n=n/10;
     }
-
-    printf("\n");
-    display(&s);
-    return 0;
+    while(s.top!=-1)
+    {
+        rev=rev+fact*pop(&s);
+        fact=fact*10;
+    }
+    if(m==rev)
+    {
+        printf("Number is palindrome\n");
+    }
+    else
+    {
+        printf("NOt palindrome\n");
+    }
 }
